@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" ng-app="neoness">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -16,9 +16,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+	
   </head>
   <body>
-	<div class="container">
+	<script src="http://test.neoness-forme.com/js/angular/angular.min.js"></script>
+	<script src="app.js"></script>
+	<div class="container" style="background-color:red;"  >
 		<header >
 			<nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -29,7 +32,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Neoness</a>
+            <a class="navbar-brand" href="#"><img src="images/logo-neoness.png" height="20px"/>Neoness</a>
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -62,9 +65,149 @@
 			<li>qsdqs</li>
 		</ul>
 	</div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-  </body>
+			<section ng-controller="PlanningCoursController as planning" >
+			<form method="get" action="" id="filtre_planning_cours" class="bg3" >
+                <fieldset>
+                    <legend>RECHERCHE AVANCÉE <span>semaines du 22 mai au  05 juin</span></legend>
+                    <select name="filtre_clubs" id="filtre_clubs" ng-model="filtre.club">
+                        <option value="">Clubs</option>
+                        <option value="15"   >Aubervilliers</option><option value="7"   >Austerlitz</option><option value="6"   >Batignolles</option><option value="11"   >Beaugrenelle</option><option value="8"   >Colombes</option><option value="14"   >Défense Grande Arche</option><option value="3"   >Fontenay</option><option value="4"   >Ivry</option><option value="17"   >Jaurès</option><option value="10"   >Lyon</option><option value="12"   >Merignac</option><option value="1"   >Motte Picquet</option><option value="9"   >Nantes</option><option value="2"   >Nation</option><option value="16"   >Rouen Saint-Sever</option><option value="13"   >Saint-Lazare</option>                    </select>
+                    <div class="checkbox-dropdown">
+                        Type de cours
+                        <ul class="checkbox-dropdown-list">
+                            <li>
+                                <label style="color:#B10043;"><input type="checkbox" value="cardio" name="filtre_type_cours" ng-model="cardio" ng-true-value="cardio" ng-false-value=""/>Cardio-training</label>
+                            </li>
+                            <li>
+                                <label style="color:#5F0E78;"><input type="checkbox" value="bien-etre" name="filtre_type_cours" ng-model="bienetre" ng-true-value="bien-etre" ng-false-value="" />Renforcement & bien-être</label>
+                            </li>
+                            <li>
+                                <label style="color: #D38625;"><input type="checkbox" value="muscu" name="filtre_type_cours" ng-model="muscu" ng-true-value="muscu" ng-false-value="" />Renforcement musculaire</label>
+                            </li>
+                        </ul>
+                    </div>
+                    <select name="filtre_cours" id="filtre_cours" ng-model="filtre.cours">
+                        <option value="">Cours</option>
+                        <option value="34"   >Cours 1</option><option value="35"   >Cours 2</option><option value="36"   >Cours 3b</option><option value="37"   >Cours AA</option>                    </select>
+                    <select name="filtre_jours" id="filtre_jours" ng-model="filtre.jour">
+                        <option value="">Jours</option>
+                        <option value="1">Lundi</option>
+                        <option value="2">Mardi</option>
+                        <option value="3">Mercredi</option>
+                        <option value="4">Jeudi</option>
+                        <option value="5">Vendredi</option>
+                        <option value="6">Samedi</option>
+                        <option value="7">Dimanche</option>
+                    </select>
+                    <select name="filtre_horraires" id="filtre_horraires" ng-model="horaire">
+                        <option value="7h00">Horraires</option>
+                                                <option value="7h00" >&ge; 7h00</option>
+                                                <option value="8h00" >&ge; 8h00</option>
+                                                <option value="9h00" >&ge; 9h00</option>
+                                                <option value="10h00" >&ge; 10h00</option>
+                                                <option value="11h00" >&ge; 11h00</option>
+                                                <option value="12h00" >&ge; 12h00</option>
+                                                <option value="13h00" >&ge; 13h00</option>
+                                                <option value="14h00" >&ge; 14h00</option>
+                                                <option value="15h00" >&ge; 15h00</option>
+                                                <option value="16h00" >&ge; 16h00</option>
+                                                <option value="17h00" >&ge; 17h00</option>
+                                                <option value="18h00" >&ge; 18h00</option>
+                                                <option value="19h00" >&ge; 19h00</option>
+                                                <option value="20h00" >&ge; 20h00</option>
+                                                <option value="21h00" >&ge; 21h00</option>
+                                            </select>
+                </fieldset>
+            </form>
+            <!-- TABLEAU -->
+            <table id="tableau_cours">
+                <thead>
+                    <tr>
+                        <th style="width: 18%">
+                            <a href ng-click="field='club'; reverse = !reverse;">Club
+                                <span ng-show="field=='club'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 16%">
+                            <a href ng-click="field='nom'; reverse = !reverse;">Cours
+                                <span ng-show="field=='nom'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 7%">
+                            <a href ng-click="field='debut'; reverse = !reverse;">Date
+                                <span ng-show="field=='debut'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 10%">
+                            <a href ng-click="field='jourInt'; reverse = !reverse;">Jour
+                                <span ng-show="field=='jourInt'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 15%">
+                            <a href ng-click="field='horaire'; reverse = !reverse;">Horaire
+                                <span ng-show="field=='horaire'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 7%">
+                            <a href ng-click="field='dureeMinute'; reverse = !reverse;">Durée
+                                <span ng-show="field=='dureeMinute'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 15%">
+                            <a href ng-click="field='intensite'; reverse = !reverse;">+ d'infos
+                                <span ng-show="field=='intensite'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 12%">
+                            <a href ng-click="field='reservation'; reverse = !reverse;">Reserver
+                                <span ng-show="field=='reservation'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in cours | filter:{club_id : filtre.club, cours_id: filtre.cours, jourInt: filtre.jour} 
+                                              | filter: filterByDominante
+                                              | filter: filterByHoraire
+                                              | orderBy:field:reverse">
+                        <td><a href="salles-sport-fitness/salle-sport-{{ c.club_url }}.htm#titre_ancre" title="Plus d'infos sur le club de {{ c.club }}" >{{ c.club }}</a></td>
+                        <td class="{{ c.dominante }}"><a href="{{ c.dominanteUrl }}#{{ c.ancre }}" title="Découvrez-en plus sur ce type de cours">{{ c.nom }}</a></td>
+                        <td>{{ c.dateDebut }}</td>
+                        <td>{{ c.jour }}</td>
+                        <td>{{ c.horaire }}</td>
+                        <td>{{ c.duree }}</td>
+                        <td class="intensity">
+                            Intensité <span class="intensite" ng-bind-html="c.intensiteGraphique | html"></span><br />
+                            <a href="infos_club_live.php" class="lien_fancybox" fancybox>club LIVE</a>
+                        </td>
+                        <td class="reservation"><a class="lien_reservation" href="cours-reservation.php?resa={{ c.id }}" ng-show="{{ c.reservation }}" title="Reservez votre place pour ce cours" fancybox >Cours sur réservation</a><span ng-hide="{{ c.reservation }}">-</span></td>
+                    </tr>
+                </tbody>
+            </table>
+</section>
+</body>
 </html>
