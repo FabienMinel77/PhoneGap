@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Neoness - Carte</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<!-- Mon Style -->
+	<link href="css/style.css" rel="stylesheet">
+	
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
+	<!-- Google Map -->
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+	<script type="text/javascript" src="js/carte-des-clubs.js"></script>
+	
+  </head>
+  <body onload="initialize();">
+	<div class="container-fluid" >
+		<header >
+		</header>
+		<h1>Carte des clubs</h1>
+		<p><a href="index.html">retour</a></p>
+		<input id="map-adresses" type="hidden" value="48.848074,2.488415|48.818956,2.395564|48.849132,2.408687|48.892328,2.315668|48.839531,2.359796|48.849808,2.292978|48.909436,2.231937|47.244542,-1.598574|48.845551,2.284317|45.737544,4.868362|44.832826,-0.662141|48.879684,2.329293|48.892108,2.234546|48.881547,2.373803|48.902284,2.376874|49.431030,1.083497" />
+		<input id="map-nom" type="hidden" value="Fontenay-sous-Bois|Ivry|Paris 20|Paris 17|Paris 5|Paris 15|Colombes|Nantes|Paris 15 - Beaugrenelle|Lyon - Mairie du 8ème|Bordeaux|Paris 9 - Saint-Lazare|La Défense 92|Paris 19 - Jaurès|Aubervilliers 93|Rouen" />
+		<input id="map-url" type="hidden" value="fontenay-sous-bois|ivry|paris-20|paris-17|paris-5|paris-15|colombes|nantes|paris-15-beaugrenelle|lyon-8|bordeaux-merignac|paris-9-saint-lazare|defense-grande-arche-92|paris-19-jaures|Aubervilliers-93|rouen" />
+		<input id="BaseUrl" type="hidden" value="http://www.neoness-forme.com" />
+		<div id="map-canvas" style="width:100%; height:350px;"></div>
+	</div>
+</body>
+</html>

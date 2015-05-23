@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr" ng-app="neoness">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Neoness - Cours</title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	
+  </head>
+  <body>
+	<script src="http://test.neoness-forme.com/js/angular/angular.min.js"></script>
+	<script src="app.js"></script>
+	<div class="container-fluid" >
+		<h1>Liste des cours</h1>
+		<p><a href="index.html">retour</a></p>
+			<section ng-controller="PlanningCoursController as planning" class="table-responsive" >
+            <!-- TABLEAU -->
+            <table id="tableau_cours" class="table table-condensed small table-hover">
+                <thead>
+                    <tr>
+                        <th style="width: 18%">
+                            <a href ng-click="field='club'; reverse = !reverse;">Club
+                                <span ng-show="field=='club'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 16%">
+                            <a href ng-click="field='nom'; reverse = !reverse;">Cours
+                                <span ng-show="field=='nom'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 7%">
+                            <a href ng-click="field='debut'; reverse = !reverse;">Date
+                                <span ng-show="field=='debut'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 10%">
+                            <a href ng-click="field='jourInt'; reverse = !reverse;">Jour
+                                <span ng-show="field=='jourInt'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 15%">
+                            <a href ng-click="field='horaire'; reverse = !reverse;">Horaire
+                                <span ng-show="field=='horaire'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 7%">
+                            <a href ng-click="field='dureeMinute'; reverse = !reverse;">Durée
+                                <span ng-show="field=='dureeMinute'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 15%">
+                            <a href ng-click="field='intensite'; reverse = !reverse;">+ d'infos
+                                <span ng-show="field=='intensite'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                        <th style="width: 12%">
+                            <a href ng-click="field='reservation'; reverse = !reverse;">Reserver
+                                <span ng-show="field=='reservation'">
+                                    <span ng-show='reverse'>{{ '&#9650;'|html }}</span>
+                                    <span ng-show='!reverse'>{{ '&#9660;'|html }}</span>
+                                </span>
+                            </a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="c in cours | filter:{club_id : filtre.club, cours_id: filtre.cours, jourInt: filtre.jour} 
+                                              | filter: filterByDominante
+                                              | filter: filterByHoraire
+                                              | orderBy:field:reverse">
+                        <td><a href="salles-sport-fitness/salle-sport-{{ c.club_url }}.htm#titre_ancre" title="Plus d'infos sur le club de {{ c.club }}" >{{ c.club }}</a></td>
+                        <td class="{{ c.dominante }}"><a href="{{ c.dominanteUrl }}#{{ c.ancre }}" title="Découvrez-en plus sur ce type de cours">{{ c.nom }}</a></td>
+                        <td>{{ c.dateDebut }}</td>
+                        <td>{{ c.jour }}</td>
+                        <td>{{ c.horaire }}</td>
+                        <td>{{ c.duree }}</td>
+                        <td class="intensity">
+                            Intensité <span class="intensite" ng-bind-html="c.intensiteGraphique | html"></span><br />
+                            <a href="infos_club_live.php" class="lien_fancybox">club LIVE</a>
+                        </td>
+                        <td class="reservation">
+						<button type="button" class="btn btn-warning btn-xs" ng-show="{{ c.reservation }}" >Cours sur réservation</button><span ng-hide="{{ c.reservation }}">-</span></td>
+                    </tr>
+                </tbody>
+            </table>
+</section>
+</div>
+</body>
+</html>
